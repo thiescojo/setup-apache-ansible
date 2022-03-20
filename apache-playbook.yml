@@ -34,4 +34,19 @@
      name: git
      state: present
      update_cache: yes
-                                   
+
+- name: install apache2
+  hosts: ubuntuclients
+  tasks:
+  - name: Install apache2
+    ansible.builtin.package:
+     name: apache2
+     state: present
+
+- name: install httpd
+  hosts: amazonclients
+  tasks:
+  - name: Install httpd
+    ansible.builtin.package:
+     name: httpd
+     state: present
