@@ -1,0 +1,37 @@
+#MY PLAYBOOK TO DEPLOY APACHE
+
+- name: configure apache on ubuntu
+  hosts: ubuntuclients
+  tasks:
+  - name: Upgrade all packages
+    apt:
+      name: '*'
+      state: latest
+
+  - name: Install the latest version of Apache
+    apt: name=apache2 update_cache=yes state=latest
+
+  - name: Start service httpd, if not started
+    ansible.builtin.service:
+      name: apache2
+      state: started
+
+  - name: Enable service httpd, and not touch the state
+    ansible.builtin.service:
+      name: apache2
+      enabled: yes
+
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: /home/ubuntu/index.html
+      dest: /var/www/html/
+
+- name: configure git on ubuntu
+  hosts: ubuntuclients
+  tasks:
+  - name: Install git
+    apt:
+     name: git
+     state: present
+     update_cache: yes
+                                   
